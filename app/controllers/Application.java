@@ -21,12 +21,18 @@ public class Application extends Controller {
     	  else {
     	    String username = json.findPath("username").getTextValue();
     	    String password = json.findPath("password").getTextValue();
-    	    if(username.equals("Lolo") && password.equals("bond")){
+    	    if(username.equals("lolo") && password.equals("bond")){
     	      return ok("You're now signed in");
     	    }
     	    else{
     	    	return unauthorized("Bad username or password");
     	    }
     	  }
+    }
+    public static Result register(){
+    	return TODO;
+    }
+    public static Result categories(String subs){
+    	return TODO;
     }
 }

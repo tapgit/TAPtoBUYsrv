@@ -6,5 +6,9 @@
 GET     /                           controllers.Application.index()
 POST 	/login						controllers.Application.checkLogin()
 
+POST 	/register					controllers.Application.register()
+
+GET		/categories/:subs			controllers.Application.categories(subs: String)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
