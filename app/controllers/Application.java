@@ -9,101 +9,138 @@ import play.libs.Json;
 import views.html.*;
 
 public class Application extends Controller {
-  
-    public static Result index() {
-        return ok(index.render("Your new application is ready."));
-    }
-    
-    public static Result checkLogin(){
-    	JsonNode json = request().body().asJson();
-    	  if(json == null) {
-    	    return badRequest("Expecting Json data");
-    	  } 
-    	  else {
-    	    String username = json.findPath("username").getTextValue();
-    	    String password = json.findPath("password").getTextValue();
-    	    if(username.equals("lolo") && password.equals("bond")){
-    	      return ok("You're now signed in");
-    	    }
-    	    else{
-    	    	return unauthorized("Bad username or password");
-    	    }
-    	  }
-    }
-    public static Result register(){
-    	return TODO;
-    }
-    public static Result mainCategories(){
-    	return categories(null,"All");
-    }
-    public static Result categories(String parentCat, String childCat){
-    	ObjectNode json = Json.newObject();
-    	
-    	//primer nivel
-    	if(parentCat==null && childCat.equals("All")){
-    		json.put("Books", true);
-    		json.put("Electronics", true);
-    		json.put("Computers", true);
-    		json.put("Clothing", true);
-    		json.put("Shoes", true);
-    		json.put("Sports", true);
-    	}
-    	//segundo nivel
-    	else if(parentCat.equals("All") && childCat.equals("Books")){
-    		json.put("Children", false);
-    		json.put("Fiction", false);
-    		json.put("Technology", false);
-    		json.put("Business", false);
-    	}
-    	else if(parentCat.equals("All") && childCat.equals("Electronics")){
-    		json.put("TV", false);
-    		json.put("Audio", false);
-    		json.put("Phones", false);
-    		json.put("Cameras", false);
-    		json.put("Video", false);
-    	}
-    	else if(parentCat.equals("All") && childCat.equals("Computers")){
-    		json.put("Laptops", false);
-    		json.put("Desktops", false);
-    		json.put("Tablets", false);
-    		json.put("Printers", false);
-    	}
-    	else if(parentCat.equals("All") && childCat.equals("Clothing")){
-    		json.put("Children", false);
-    		json.put("Men", true);
-    		json.put("Women", true);
-    	}
-    	else if(parentCat.equals("All") && childCat.equals("Shoes")){
-    		json.put("Children", false);
-    		json.put("Women", false);
-    		json.put("Men", false);
-    	}
-    	else if(parentCat.equals("All") && childCat.equals("Sports")){
-    		json.put("Bicycles", true);
-    		json.put("Fishing", false);
-    		json.put("Baseball", false);
-    		json.put("Golf", false);
-    		json.put("Basketball", false);
-    	}
-    	//tercer nivel
-    	else if(parentCat.equals("Clothing") && childCat.equals("Men")){
-    		json.put("Shirts", false);
-    		json.put("Pants", false);
-    		json.put("Socks", false);
-    	}
-    	else if(parentCat.equals("Clothing") && childCat.equals("Women")){
-    		json.put("Shirts", false);
-    		json.put("Pants", false);
-    		json.put("Dresses", false);
-    	}
-    	//cuarto nivel
-    	else if(parentCat.equals("Sports") && childCat.equals("Bicycles")){
-    		json.put("Frames", false);
-    		json.put("Wheels", false);
-    		json.put("Helmet", false);
-    		json.put("Parts", false);
-    	}
-    	return ok(json);
-    }
-    
+
+	public static Result index() {
+		return ok(index.render("Your new application is ready."));
+	}
+
+	public static Result checkLogin(){
+		JsonNode json = request().body().asJson();
+		if(json == null) {
+			return badRequest("Expecting Json data");
+		} 
+		else {
+			String username = json.findPath("username").getTextValue();//json.get("username").getTextValue();
+			String password = json.findPath("password").getTextValue();
+			if(username.equals("lolo") && password.equals("bond")){
+				return ok("You're now signed in");
+			}
+			else{
+				return unauthorized("Bad username or password");
+			}
+		}
+	}
+	public static Result register(){
+		JsonNode json = request().body().asJson();
+		if(json == null) {
+			return badRequest("Expecting Json data");
+		} 
+		else {
+						
+			String firstname = json.get("firstname").getTextValue();
+			String lastname = json.get("lastname").getTextValue();
+			String username = json.get("username").getTextValue();
+			String password = json.get("password").getTextValue();
+			String email = json.get("email").getTextValue();
+//			//Shipping Address
+			JsonNode shippingAddress = json.get("shipping_address");
+			String shipCountry = shippingAddress.get("country").getTextValue();
+//FALTA		String shipContactName = shippingAddress.get("contact_name").getTextValue();
+			String shipStreet = shippingAddress.get("street").getTextValue();
+			String shipCity = shippingAddress.get("city").getTextValue();
+			String shipState = shippingAddress.get("state").getTextValue();
+			String shipZipCode = shippingAddress.get("zip_code").getTextValue();
+			String shipTelephone = shippingAddress.get("telephone").getTextValue();
+			//Billing Address
+			JsonNode billingAddress = json.get("billing_address");
+			String billCountry = billingAddress.get("country").getTextValue();
+//FALTA     String billContactName = billingAddress.get("contact_name").getTextValue();
+			String billStreet = billingAddress.get("street").getTextValue();
+			String billCity = billingAddress.get("city").getTextValue();
+			String billState = billingAddress.get("state").getTextValue();
+			String billZipCode = billingAddress.get("zip_code").getTextValue();
+			String billTelephone = billingAddress.get("telephone").getTextValue();
+//			//Credit Card
+			JsonNode creditCard = json.get("credit_card");
+			String creditCardNumber = creditCard.get("number").getTextValue();
+			String creditCardHoldersName = creditCard.get("holders_name").getTextValue();
+			String creditCardExpDate = creditCard.get("exp_date").getTextValue();			
+			//create user
+			return ok();
+		}
+
+	}
+	public static Result mainCategories(){
+		return categories(null,"All");
+	}
+	public static Result categories(String parentCat, String childCat){
+		ObjectNode json = Json.newObject();
+
+		//primer nivel
+		if(parentCat==null && childCat.equals("All")){
+			json.put("Books", true);
+			json.put("Electronics", true);
+			json.put("Computers", true);
+			json.put("Clothing", true);
+			json.put("Shoes", true);
+			json.put("Sports", true);
+		}
+		//segundo nivel
+		else if(parentCat.equals("All") && childCat.equals("Books")){
+			json.put("Children", false);
+			json.put("Fiction", false);
+			json.put("Technology", false);
+			json.put("Business", false);
+		}
+		else if(parentCat.equals("All") && childCat.equals("Electronics")){
+			json.put("TV", false);
+			json.put("Audio", false);
+			json.put("Phones", false);
+			json.put("Cameras", false);
+			json.put("Video", false);
+		}
+		else if(parentCat.equals("All") && childCat.equals("Computers")){
+			json.put("Laptops", false);
+			json.put("Desktops", false);
+			json.put("Tablets", false);
+			json.put("Printers", false);
+		}
+		else if(parentCat.equals("All") && childCat.equals("Clothing")){
+			json.put("Children", false);
+			json.put("Men", true);
+			json.put("Women", true);
+		}
+		else if(parentCat.equals("All") && childCat.equals("Shoes")){
+			json.put("Children", false);
+			json.put("Women", false);
+			json.put("Men", false);
+		}
+		else if(parentCat.equals("All") && childCat.equals("Sports")){
+			json.put("Bicycles", true);
+			json.put("Fishing", false);
+			json.put("Baseball", false);
+			json.put("Golf", false);
+			json.put("Basketball", false);
+		}
+		//tercer nivel
+		else if(parentCat.equals("Clothing") && childCat.equals("Men")){
+			json.put("Shirts", false);
+			json.put("Pants", false);
+			json.put("Socks", false);
+		}
+		else if(parentCat.equals("Clothing") && childCat.equals("Women")){
+			json.put("Shirts", false);
+			json.put("Pants", false);
+			json.put("Dresses", false);
+		}
+		//cuarto nivel
+		else if(parentCat.equals("Sports") && childCat.equals("Bicycles")){
+			json.put("Frames", false);
+			json.put("Wheels", false);
+			json.put("Helmet", false);
+			json.put("Parts", false);
+		}
+		return ok(json);
+	}
+
 }
