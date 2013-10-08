@@ -18,7 +18,7 @@ GET		/search/:searchString					controllers.Application.search(searchString: Stri
 
 GET     /product/:productID 					controllers.Application.getProductInfo(productID: String)
 
-GET 	/cart/:cardID							controllers.Application.getCartItems(cartID: String)
+GET 	/cart/:cartID							controllers.Application.getCartItems(cartID: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file             	   			 controllers.Assets.at(path="/public", file)

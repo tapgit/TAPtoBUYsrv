@@ -1,5 +1,11 @@
 package controllers;
 
+import java.util.ArrayList;
+
+import models.Product;
+import models.ProductForAuction;
+import models.ProductForSale;
+
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 
@@ -142,5 +148,39 @@ public class Application extends Controller {
 		}
 		return ok(json);
 	}
+	
+	public static Result search(String searchString){
+		//ArrayList<Product> products = new ArrayList<Product>();
+		
+		Product item1 = new ProductForSale(0, "iPhone 5s new!", "7d 1h",
+				false, 7.99,"iPhone", "5s",
+				"Apple", "1 x 10", "Brand new white iphone with 16gb",
+				"http://www.server.com/image.jpg",10, 9, 300.50);
+		Product item2 = new ProductForAuction(1, "Galaxy s4 blue new!", "2w 5d 1h",
+				false, 0, "Galaxy", "s4", "Sansung", "3.5 x 5", "Brand new unonpened black unlocked", 
+				"http://www.server.com/image.jpg", 50.99, 299.50, 50, 0.7);
+		//products.add(item1);
+		//products.add(item2);
+		ObjectNode json = Json.newObject();
+		ObjectNode item1Json = Json.newObject();
+		item1Json.put("forBid", false);
+		item1Json.putPOJO("item", Json.toJson(item1));
+		json.put("item-001", item1Json);
+		
+		ObjectNode item2Json = Json.newObject();
+		item2Json.put("forBid", true);
+		item2Json.putPOJO("item", Json.toJson(item2));
+		json.put("item-002", item2Json);
+		
+		//json.putPOJO("productList", products);
+		return ok(json);
+	}
+	
+	public static Result getCartItems(String cartID){
+		return TODO;
 
+	}
+	public static Result getProductInfo(String productID){
+		return TODO;
+	}
 }
