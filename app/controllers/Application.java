@@ -166,12 +166,12 @@ public class Application extends Controller {
 		ObjectNode item1Json = Json.newObject();
 		item1Json.put("forBid", false);
 		item1Json.putPOJO("item", Json.toJson(item1));
-		json.put("item-001", item1Json);
+		json.put("item-000", item1Json);
 		
 		ObjectNode item2Json = Json.newObject();
 		item2Json.put("forBid", true);
 		item2Json.putPOJO("item", Json.toJson(item2));
-		json.put("item-002", item2Json);
+		json.put("item-001", item2Json);
 
 //		ObjectNode item3Json = Json.newObject();
 //		item2Json.put("forBid", false);
