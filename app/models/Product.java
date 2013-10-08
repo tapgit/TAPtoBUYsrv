@@ -15,9 +15,12 @@ public class Product {
 	private String description;
 	private String imgLink;
 	
-	public Product(int id, String title, String timeDuration, boolean timeEnded,
-			double shippingPrice, String product, String model, String brand,
-			String dimensions, String description, String imgLink) {
+	private String sellerUsername;
+	private double sellerRate;
+	public Product(int id, String title, String timeDuration,
+			boolean timeEnded, double shippingPrice, String product,
+			String model, String brand, String dimensions, String description,
+			String imgLink, String sellerUsername, double sellerRate) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -30,6 +33,8 @@ public class Product {
 		this.dimensions = dimensions;
 		this.description = description;
 		this.imgLink = imgLink;
+		this.sellerUsername = sellerUsername;
+		this.sellerRate = sellerRate;
 	}
 	public int getId() {
 		return id;
@@ -97,4 +102,18 @@ public class Product {
 	public void setImgLink(String imgLink) {
 		this.imgLink = imgLink;
 	}
+	public String getSellerUsername() {
+		return sellerUsername;
+	}
+	public void setSellerUsername(String sellerUsername) {
+		this.sellerUsername = sellerUsername;
+	}
+	public double getSellerRate() {
+		return sellerRate;
+	}
+	public void setSellerRate(double sellerRate) {
+		this.sellerRate = sellerRate;
+	}
+	
+	
 }

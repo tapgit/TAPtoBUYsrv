@@ -7,12 +7,13 @@ public class ProductForSale extends Product {
 
 
 	public ProductForSale(int id, String title, String timeDuration,
-			boolean timeEnded, double shippingPrice, String product, String model,
-			String brand, String dimensions, String description,
-			String imgLink, int startingQuantity, int remainingQuantity,
-			double instantPrice) {
+			boolean timeEnded, double shippingPrice, String product,
+			String model, String brand, String dimensions, String description,
+			String imgLink, String sellerUsername, double sellerRate,
+			int startingQuantity, int remainingQuantity, double instantPrice) {
 		super(id, title, timeDuration, timeEnded, shippingPrice, product,
-				model, brand, dimensions, description, imgLink);
+				model, brand, dimensions, description, imgLink, sellerUsername,
+				sellerRate);
 		this.startingQuantity = startingQuantity;
 		this.remainingQuantity = remainingQuantity;
 		this.instantPrice = instantPrice;

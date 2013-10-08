@@ -5,15 +5,17 @@ public class ProductForAuction extends Product {
 	private double currentBidPrice;
 	private int totalBids;
 	private double bidRate;
-	
+
 
 	public ProductForAuction(int id, String title, String timeDuration,
 			boolean timeEnded, double shippingPrice, String product,
 			String model, String brand, String dimensions, String description,
-			String imgLink, double startinBidPrice, double currentBidPrice,
-			int totalBids, double bidRate) {
+			String imgLink, String sellerUsername, double sellerRate,
+			double startinBidPrice, double currentBidPrice, int totalBids,
+			double bidRate) {
 		super(id, title, timeDuration, timeEnded, shippingPrice, product,
-				model, brand, dimensions, description, imgLink);
+				model, brand, dimensions, description, imgLink, sellerUsername,
+				sellerRate);
 		this.startinBidPrice = startinBidPrice;
 		this.currentBidPrice = currentBidPrice;
 		this.totalBids = totalBids;

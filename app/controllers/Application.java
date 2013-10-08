@@ -150,18 +150,19 @@ public class Application extends Controller {
 	}
 	
 	public static Result search(String searchString){
-		//ArrayList<Product> products = new ArrayList<Product>();
 		
 		Product item1 = new ProductForSale(0, "iPhone 5s new!", "7d 1h",
 				false, 7.99,"iPhone", "5s",
 				"Apple", "1 x 10", "Brand new white iphone with 16gb",
-				"http://www.server.com/image.jpg",10, 9, 300.50);
+				"http://www.server.com/image.jpg","juanito77",5.0, 10, 9, 300.50);
 		Product item2 = new ProductForAuction(1, "Galaxy s4 blue new!", "2w 5d 1h",
 				false, 0, "Galaxy", "s4", "Sansung", "3.5 x 5", "Brand new unonpened black unlocked", 
-				"http://www.server.com/image.jpg", 50.99, 299.50, 50, 0.7);
-		//products.add(item1);
-		//products.add(item2);
+				"http://www.server.com/image.jpg","", 1.0 , 50.99, 299.50, 50, 0.7);
+	
+
+		
 		ObjectNode json = Json.newObject();
+		
 		ObjectNode item1Json = Json.newObject();
 		item1Json.put("forBid", false);
 		item1Json.putPOJO("item", Json.toJson(item1));
@@ -171,16 +172,29 @@ public class Application extends Controller {
 		item2Json.put("forBid", true);
 		item2Json.putPOJO("item", Json.toJson(item2));
 		json.put("item-002", item2Json);
-		
-		//json.putPOJO("productList", products);
+
+//		ObjectNode item3Json = Json.newObject();
+//		item2Json.put("forBid", false);
+//		item2Json.putPOJO("item", Json.toJson(item2));
+//		json.put("item-003", item2Json);
+//
+//		ObjectNode ite4Json = Json.newObject();
+//		item2Json.put("forBid", true);
+//		item2Json.putPOJO("item", Json.toJson(item2));
+//		json.put("item-002", item2Json);
+//
+//		ObjectNode item5Json = Json.newObject();
+//		item2Json.put("forBid", true);
+//		item2Json.putPOJO("item", Json.toJson(item2));
+//		json.put("item-002", item2Json);
 		return ok(json);
 	}
 	
 	public static Result getCartItems(String cartID){
-		return TODO;
+		return search("nada");
 
 	}
 	public static Result getProductInfo(String productID){
-		return TODO;
+		return search("nada");
 	}
 }
