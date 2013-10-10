@@ -20,6 +20,7 @@ import views.html.*;
 
 public class Application extends Controller {
 
+	public static String imagesDir = "/home/cok0/git/TAPtoBUYsrv/images/";
 	public static Result index() {
 		return ok(index.render("Your new application is ready."));
 	}
@@ -178,10 +179,10 @@ public class Application extends Controller {
 		return ok(respJson);
 	}
 
-	public static Result getCartItems(int cartId){	
+	public static Result getCartItems(int userId){	
 		ArrayList<Product> itemsInCart = getCartItemsList();
 		
-		if(cartId==0){
+		if(userId==0){
 			ObjectNode respJson = Json.newObject();
 			ArrayNode array = respJson.arrayNode();
 			ObjectNode itemJson = null;
@@ -195,20 +196,50 @@ public class Application extends Controller {
 			return ok(respJson);//200
 		}
 		else{
-			return notFound("Cart with the provided id was not found");//404
+			return notFound("No cart found related to that user id");//404
 		}
 	}
-	public static Result updateCartItems(int cartId){
+	public static Result addItemToCart(int userId, int productId){
 		JsonNode json = request().body().asJson();
 		if(json == null) {
 			return badRequest("Expecting Json data");//400
 		} 
 		else {
-			
-			
-			
-			return ok(json);
+			if(userId != 0){
+				return notFound("No cart found related to that user id");//404
+			}
+			else if(!(productId >=0 && productId < 6)){
+				return notFound("Product not found");//404
+			}
+			else{
+				//Add item to cart
+				
+				return ok();//200
+			}
 		}
+	}
+	public static Result deleteItemFromCart(int userId, int productId){
+		JsonNode json = request().body().asJson();
+		if(json == null) {
+			return badRequest("Expecting Json data");//400
+		} 
+		else {
+			if(userId != 0){
+				return notFound("No cart found related to that user id");//404
+			}
+			else if(!(productId >=0 && productId < 6)){
+				return notFound("Product not found");//404
+			}
+			else{
+				//Delete item from cart
+				
+				return noContent();//200
+			}
+		}
+	}
+	
+	public static Result getSellProduct(int productId){
+		return TODO;
 	}
 
 	public static Result getProductInfo(int productId){
@@ -292,10 +323,9 @@ public class Application extends Controller {
 	}
 	
 	public static Result getImage(String imageName){
-		String imgDir = "/home/cok0/git/TAPtoBUYsrv/images/";
-		if(imageName.equals("img1.jpg")|imageName.equals("img2.jpg")|imageName.equals("img3.jpg")|imageName.equals("img4.jpg")|
-				imageName.equals("img5.jpg")|imageName.equals("img6.jpg")){
-			return ok(new File(imgDir + imageName));//200
+		if(imageName.equals("img1.jpg")||imageName.equals("img2.jpg")||imageName.equals("img3.jpg")||imageName.equals("img4.jpg")||
+				imageName.equals("img5.jpg")||imageName.equals("img6.jpg")){
+			return ok(new File(imagesDir + imageName));//200
 		}
 		else{
 			return notFound("No image found with the requested name");//404
@@ -303,10 +333,9 @@ public class Application extends Controller {
 	}
 
 	public static Result getScaledImage(String imageName){
-		String imgDir = "/home/cok0/git/TAPtoBUYsrv/images/scaled/";
-		if(imageName.equals("img1.jpg")|imageName.equals("img2.jpg")|imageName.equals("img3.jpg")|imageName.equals("img4.jpg")|
-				imageName.equals("img5.jpg")|imageName.equals("img6.jpg")){
-			return ok(new File(imgDir + imageName));//200
+		if(imageName.equals("img1.jpg")||imageName.equals("img2.jpg")||imageName.equals("img3.jpg")||imageName.equals("img4.jpg")||
+				imageName.equals("img5.jpg")||imageName.equals("img6.jpg")){
+			return ok(new File(imagesDir + "scaled/" + imageName));//200
 		}
 		else{
 			return notFound("No image found with the requested name");//404

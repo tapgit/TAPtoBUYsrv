@@ -28,14 +28,18 @@ GET		/images/scaled/:imageName							controllers.Application.getScaledImage(imag
 #Every user has a cart
 
 # Get the items in the cart
-GET 	/cart/:cartId										controllers.Application.getCartItems(cartId: Integer)
-# Update the items in the cart (every user has a cart)
-PUT		/cart/:cartId										controllers.Application.updateCartItems(cartId: Integer)
+GET 	/cart/:userId										controllers.Application.getCartItems(userId: Integer)
+# Add & DELETE the items in the cart (every user has a cart)
+POST	/cart/:userId/:productId							controllers.Application.addItemToCart(userId: Integer, productId: Integer)
+DELETE  /cart/:userId/:productId							controllers.Application.deleteItemFromCart(userId: Integer, productId: Integer)
 
 #:::::::::::::::PRODUCTINFO:::::::::::::::::::::
 GET     /product/:productId 								controllers.Application.getProductInfo(productId: Integer)
 
-#GET		/orders/:orderId								controllers.Application.getOrderInfo(OrderId: String)
+#:::::::::::::::SELLPRODUCT:::::::::::::::::::::
+POST	/sell/:productId									controllers.Application.getSellProduct(productId: Integer)
+
+#GET	/orders/:orderId								controllers.Application.getOrderInfo(OrderId: String)
 
 
 
