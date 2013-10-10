@@ -11,11 +11,10 @@ public class ProductForAuctionInfo extends ProductForAuction {
 	public ProductForAuctionInfo(int id, String title, String timeRemaining,
 			double shippingPrice, String imgLink, String sellerUsername,
 			double sellerRate, double startinBidPrice, double currentBidPrice,
-			int totalBids, double bidRate, String product, String model,
+			int totalBids, String product, String model,
 			String brand, String dimensions, String description) {
 		super(id, title, timeRemaining, shippingPrice, imgLink, sellerUsername,
-				sellerRate, startinBidPrice, currentBidPrice, totalBids,
-				bidRate);
+				sellerRate, startinBidPrice, currentBidPrice, totalBids);
 		this.product = product;
 		this.model = model;
 		this.brand = brand;

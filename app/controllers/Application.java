@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import models.Product;
 import models.ProductForAuction;
+import models.ProductForAuctionInfo;
 import models.ProductForSale;
+import models.ProductForSaleInfo;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
@@ -25,23 +27,23 @@ public class Application extends Controller {
 	public static Result checkLogin(){
 		JsonNode json = request().body().asJson();
 		if(json == null) {
-			return badRequest("Expecting Json data");
+			return badRequest("Expecting Json data");//400
 		} 
 		else {
 			String username = json.findPath("username").getTextValue();//json.get("username").getTextValue();
 			String password = json.findPath("password").getTextValue();
 			if(username.equals("lolo") && password.equals("bond")){
-				return ok("You're now signed in");
+				return ok("You're now signed in");//200
 			}
 			else{
-				return unauthorized("Bad username or password");
+				return unauthorized("Bad username or password");//401
 			}
 		}
 	}
 	public static Result register(){
 		JsonNode json = request().body().asJson();
 		if(json == null) {
-			return badRequest("Expecting Json data");
+			return badRequest("Expecting Json data");//400
 		} 
 		else {
 
@@ -76,7 +78,7 @@ public class Application extends Controller {
 
 
 			//create user with his/her cart
-			return ok();
+			return created();//201
 		}
 
 	}
@@ -154,34 +156,12 @@ public class Application extends Controller {
 	}
 
 	public static Result search(String searchString){
-
-		Product item1 = new ProductForSale(0,"iPhone 5s", "12d 5h", 9.99, "http://127.0.0.1:9000/images/img1.jpg", 
-				"juanitoManito77", 4.5, 10, 599.00);
-
-		Product item2 = new ProductForAuction(1,"Samsumg Galaxy 4s", "5h 20m", 0, "http://127.0.0.1:9000/images/img2.jpg", 
-				"loloLopez13", 3.0, 0.99, 357.99, 60, 0.55);
-		Product item3 = new ProductForSale(2,"iPhone 5s", "12d 5h", 9.99, "http://127.0.0.1:9000/images/img1.jpg", 
-				"Kebinbin", 4.5, 10, 100.00);
-
-		Product item4 = new ProductForAuction(3,"Samsumg Galaxy 4s", "5h 20m", 0, "http://127.0.0.1:9000/images/img2.jpg", 
-				"Kidobv", 3.0, 0.99, 500.99, 60, 0.55);
-		Product item5 = new ProductForSale(4,"iPhone 5s", "12d 5h", 9.99, "http://127.0.0.1:9000/images/img1.jpg", 
-				"YangXi", 4.5, 10, 443.00);
-
-		Product item6 = new ProductForAuction(5,"Samsumg Galaxy 4s", "5h 20m", 0, "http://127.0.0.1:9000/images/img2.jpg", 
-				"bondLolo", 3.0, 0.99, 999.99, 60, 0.55);
-
-		ArrayList<Product> items = new ArrayList<Product>();
-		items.add(item1);
-		items.add(item2);
-		items.add(item3);
-		items.add(item4);
-		items.add(item5);
-		items.add(item6);
 		
+		ArrayList<Product> items = getProductList();
+
 		ObjectNode respJson = Json.newObject();
 		ArrayNode array = respJson.arrayNode();
-	
+
 		ObjectNode itemJson = null;
 		for(Product p: items){
 			itemJson = Json.newObject();
@@ -198,16 +178,64 @@ public class Application extends Controller {
 		return ok(respJson);
 	}
 
-	public static Result getCartItems(String cartID){
-		return search("nada");
+	public static Result getCartItems(int cartId){	
+		ArrayList<Product> itemsInCart = getCartItemsList();
+		
+		if(cartId==0){
+			ObjectNode respJson = Json.newObject();
+			ArrayNode array = respJson.arrayNode();
+			ObjectNode itemJson = null;
+			
+			for(Product p: itemsInCart){
+				itemJson = Json.newObject();
+				itemJson.putPOJO("item", Json.toJson(p));
+				array.add(itemJson);
+			}
+			respJson.put("cart", array);
+			return ok(respJson);//200
+		}
+		else{
+			return notFound("Cart with the provided id was not found");//404
+		}
+	}
+	public static Result updateCartItems(int cartId){
+		JsonNode json = request().body().asJson();
+		if(json == null) {
+			return badRequest("Expecting Json data");//400
+		} 
+		else {
+			
+			
+			
+			return ok(json);
+		}
+	}
 
+	public static Result getProductInfo(int productId){
+		ArrayList<Product> productInfos =getProductInfoList();
+		int target = -1;
+		for(Product pInfo: productInfos){
+			if(pInfo.getId( )== productId){
+				target = pInfo.getId();
+				break;
+			}
+		}
+		if(target == -1){
+			return notFound("No product found with the requested id");//404
+		}
+		else{
+			ObjectNode itemInfoJson = Json.newObject();
+			if(productInfos.get(target) instanceof ProductForSaleInfo){//for sale
+				itemInfoJson.put("forBid", false);
+			}
+			else{//for auction
+				itemInfoJson.put("forBid", true);
+			}
+			itemInfoJson.putPOJO("productInfo", Json.toJson(productInfos.get(target)));
+			return ok(itemInfoJson);//200
+		}
 	}
-	public static Result updateCartItems(String cartID){
-		return TODO;
-	}
-	public static Result getProductInfo(String productID){
-		return search("nada");
-	}
+	
 	public static Result getUserAccount(String id){
 		return TODO;
 	}
@@ -217,17 +245,72 @@ public class Application extends Controller {
 	public static Result deleteUserAccount(String id){
 		return TODO;
 	}
-	public static Result getImage(String imageName){
-		String imgDir = "/home/cok0/git/TAPtoBUYsrv/images/default.jpg";
-		if(imageName.equals("img1.jpg")){
-			imgDir = "/home/cok0/git/TAPtoBUYsrv/images/img1.jpg";
-		}
-		else if(imageName.equals("img2.jpg")){
-			imgDir = "/home/cok0/git/TAPtoBUYsrv/images/img2.jpg";
-		}
-		else if(imageName.equals("img3.jpg")){
-			imgDir = "/home/cok0/git/TAPtoBUYsrv/images/img3.jpg";
-		}	
-		return ok(new File(imgDir));
+
+	private static ArrayList<Product> getProductList(){
+		String scaledImgDir = "http://10.0.2.2:9000/images/scaled/";
+
+		Product item1 = new ProductForSale(0,"iPhone 5s black new", "12d 5h", 9.99, scaledImgDir+"img1.jpg", "juanitoManito77", 4.5, 10, 599.00);
+		Product item2 = new ProductForAuction(1,"Database System Concepts 6.ed", "10h 20m",0, scaledImgDir+ "img4.jpg", "loloLopez13", 3.0, 0.99, 24.99,11);
+		Product item3 = new ProductForAuction(2,"Samsumg Galaxy 4s used(like new)", "20m 33s", 0, scaledImgDir+ "img2.jpg", "Kidobv", 5.0, 0.99, 500.99, 60);
+		Product item4 = new ProductForSale(3,"Java concepts horstmann 6 ed hardcover", "1d 3h", 3.99, scaledImgDir+ "img5.jpg", "Apu Diaz", 2.5, 5, 79.99);
+		Product item5 = new ProductForAuction(4,"Samsumg Galaxy 4s unlocked", "2d 5h", 0, scaledImgDir+ "img3.jpg", "bondLolo", 4.8, 9.99, 299.99, 29);
+		Product item6 = new ProductForSale(5,"iPad 4 (new unopened)", "10d 3h", 10.99, scaledImgDir+ "img6.jpg", "YangXi", 5.80, 50, 499.99);
+
+		ArrayList<Product> items = new ArrayList<Product>();
+		items.add(item1);
+		items.add(item2);
+		items.add(item3);
+		items.add(item4);
+		items.add(item5);
+		items.add(item6);
+		return items;
 	}
+	private static ArrayList<Product> getProductInfoList(){
+		String imgDir = "http://10.0.2.2:9000/images/";
+		Product productInfo1 = new ProductForSaleInfo(0,"iPhone 5s black new", "12d 5h", 9.99, imgDir+"img1.jpg", "juanitoManito77", 4.5, 10, 599.00, "iPhone", "5s", "Apple", "10x5", "Brand new black iphone 5s");
+		Product productInfo2 = new ProductForAuctionInfo(1,"Database System Concepts 6.ed", "10h 20m",0, imgDir+ "img4.jpg", "loloLopez13", 3.0, 0.99, 24.99,11, "DataBase System Concepts", "6th", "Wiley", "10x5", "Brand new international 6th edition..");
+		Product productInfo3 = new ProductForAuctionInfo(2,"Samsumg Galaxy 4s used(like new)", "20m 33s", 0, imgDir+ "img2.jpg", "Kidobv", 5.0, 0.99, 500.99, 60, "Samsung Galaxy", "4s", "Samsung", "10x5", "Used(like new) samsung galaxy..");
+		Product productInfo4 = new ProductForSaleInfo(3,"Java concepts horstmann 6 ed hardcover", "1d 3h", 3.99, imgDir+ "img5.jpg", "Apu Diaz", 2.5, 5, 79.99, "Java Concepts", "6th", "Wiley", "10x5", "Brand new hardcover book..");
+		Product productInfo5 = new ProductForAuctionInfo(4,"Samsumg Galaxy 4s unlocked", "2d 5h", 0, imgDir+ "img3.jpg", "bondLolo", 4.8, 9.99, 299.99, 29,"Samsung Galaxy", "4s", "Samsung", "10x5", "Samsung galaxy 4s unlocked working perfectly..");
+		Product productInfo6 = new ProductForSaleInfo(5,"iPad 4 (new unopened)", "10d 3h", 10.99, imgDir+ "img6.jpg", "YangXi", 5.80, 50, 499.99, "iPad", "4", "Apple", "10x5", "Brand new black iPad 4");
+		ArrayList<Product> productInfos = new ArrayList<Product>();
+		productInfos.add(productInfo1);
+		productInfos.add(productInfo2);
+		productInfos.add(productInfo3);
+		productInfos.add(productInfo4);
+		productInfos.add(productInfo5);
+		productInfos.add(productInfo6);
+		return productInfos;
+	}
+	private static ArrayList<Product> getCartItemsList(){
+		ArrayList<Product> items = getProductList();
+		ArrayList<Product> cartItems = new ArrayList<Product>();
+		cartItems.add(items.get(0));
+		cartItems.add(items.get(2));
+		cartItems.add(items.get(5));
+		return cartItems;
+	}
+	
+	public static Result getImage(String imageName){
+		String imgDir = "/home/cok0/git/TAPtoBUYsrv/images/";
+		if(imageName.equals("img1.jpg")|imageName.equals("img2.jpg")|imageName.equals("img3.jpg")|imageName.equals("img4.jpg")|
+				imageName.equals("img5.jpg")|imageName.equals("img6.jpg")){
+			return ok(new File(imgDir + imageName));//200
+		}
+		else{
+			return notFound("No image found with the requested name");//404
+		}
+	}
+
+	public static Result getScaledImage(String imageName){
+		String imgDir = "/home/cok0/git/TAPtoBUYsrv/images/scaled/";
+		if(imageName.equals("img1.jpg")|imageName.equals("img2.jpg")|imageName.equals("img3.jpg")|imageName.equals("img4.jpg")|
+				imageName.equals("img5.jpg")|imageName.equals("img6.jpg")){
+			return ok(new File(imgDir + imageName));//200
+		}
+		else{
+			return notFound("No image found with the requested name");//404
+		}
+	}
+
 }

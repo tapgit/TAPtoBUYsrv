@@ -19,23 +19,23 @@ DELETE  /user/:id											controllers.Application.deleteUserAccount(id: String
 GET     /categories/All										controllers.Application.mainCategories()
 GET		/categories/:parentCat/:childCat					controllers.Application.categories(parentCat: String,childCat: String)
 
-
 GET		/search/:searchString								controllers.Application.search(searchString: String)
-
+#images for productInfo (large)
 GET		/images/:imageName									controllers.Application.getImage(imageName: String)
-
+#images for search, cart, etc (small)
+GET		/images/scaled/:imageName							controllers.Application.getScaledImage(imageName: String)
 #::;:::::::::::::CART:::::::::::::::::::::
 #Every user has a cart
 
 # Get the items in the cart
-GET 	/cart/:cartID										controllers.Application.getCartItems(cartID: String)
+GET 	/cart/:cartId										controllers.Application.getCartItems(cartId: Integer)
 # Update the items in the cart (every user has a cart)
-PUT		/cart/:cartID										controllers.Application.updateCartItems(cartID: String)
+PUT		/cart/:cartId										controllers.Application.updateCartItems(cartId: Integer)
 
 #:::::::::::::::PRODUCTINFO:::::::::::::::::::::
-GET     /product/:productID 								controllers.Application.getProductInfo(productID: String)
+GET     /product/:productId 								controllers.Application.getProductInfo(productId: Integer)
 
-#GET		/orders/:orderId									controllers.Application.getOrderInfo(OrderId: String)
+#GET		/orders/:orderId								controllers.Application.getOrderInfo(OrderId: String)
 
 
 

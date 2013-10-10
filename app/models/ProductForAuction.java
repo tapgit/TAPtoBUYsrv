@@ -4,17 +4,16 @@ public class ProductForAuction extends Product {
 	private double startinBidPrice;//para el history y el MYSellingItems del lado del seller.
 	private double currentBidPrice;
 	private int totalBids;
-	private double bidRate;//para que el MySellingItems del lado del seller.
+	//private double bidRate;//para que el MySellingItems del lado del seller.
 	public ProductForAuction(int id, String title, String timeRemaining,
 			double shippingPrice, String imgLink, String sellerUsername,
 			double sellerRate, double startinBidPrice, double currentBidPrice,
-			int totalBids, double bidRate) {
+			int totalBids) {
 		super(id, title, timeRemaining, shippingPrice, imgLink, sellerUsername,
 				sellerRate);
 		this.startinBidPrice = startinBidPrice;
 		this.currentBidPrice = currentBidPrice;
 		this.totalBids = totalBids;
-		this.bidRate = bidRate;
 	}
 	public double getStartinBidPrice() {
 		return startinBidPrice;
@@ -33,11 +32,5 @@ public class ProductForAuction extends Product {
 	}
 	public void setTotalBids(int totalBids) {
 		this.totalBids = totalBids;
-	}
-	public double getBidRate() {
-		return bidRate;
-	}
-	public void setBidRate(double bidRate) {
-		this.bidRate = bidRate;
 	}
 }
