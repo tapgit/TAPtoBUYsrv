@@ -5,44 +5,46 @@
 # Home page
 GET     /                         							controllers.Application.index()
 
-POST 	/login												controllers.Application.checkLogin()
+POST 	/login												controllers.UserAccountController.checkLogin()
 
-POST 	/register											controllers.Application.register()
+POST 	/register											controllers.UserAccountController.register()
+
+
+
+GET		/user/test											controllers.UserAccountController.test()
 
 #View, delete and modify user accounts (ADMIN)
-GET		/user/:id											controllers.Application.getUserAccount(id: String)
-PUT		/user/:id											controllers.Application.updateUserAccount(id: String)
-DELETE  /user/:id											controllers.Application.deleteUserAccount(id: String)
+GET		/user/:userId										controllers.UserAccountController.getUserAccountInfo(userId: Integer)
+PUT		/user/:userId										controllers.UserAccountController.updateUserAccount(userId: Integer)
+DELETE  /user/:userId										controllers.UserAccountController.deleteUserAccount(userId: Integer)
 
 
+GET     /categories/All										controllers.CategoryController.mainCategories()
+GET		/categories/:parentCat/:childCat					controllers.CategoryController.categories(parentCat: String,childCat: String)
 
-GET     /categories/All										controllers.Application.mainCategories()
-GET		/categories/:parentCat/:childCat					controllers.Application.categories(parentCat: String,childCat: String)
+GET		/search/:searchString								controllers.SearchController.getSearchResults(searchString: String)
 
-GET		/search/:searchString								controllers.Application.search(searchString: String)
-#images for productInfo (large)
-GET		/images/:imageName									controllers.Application.getImage(imageName: String)
-#images for search, cart, etc (small)
-GET		/images/scaled/:imageName							controllers.Application.getScaledImage(imageName: String)
-#::;:::::::::::::CART:::::::::::::::::::::
-#Every user has a cart
+GET		/images/:imageName									controllers.ImageController.getImage(imageName: String)
+GET		/images/scaled/:imageName							controllers.ImageController.getScaledImage(imageName: String)
 
-# Get the items in the cart
-GET 	/cart/:userId										controllers.Application.getCartItems(userId: Integer)
-# Add & DELETE the items in the cart (every user has a cart)
-POST	/cart/:userId/:productId							controllers.Application.addItemToCart(userId: Integer, productId: Integer)
-DELETE  /cart/:userId/:productId							controllers.Application.deleteItemFromCart(userId: Integer, productId: Integer)
+GET 	/cart/:userId										controllers.CartController.getCartItems(userId: Integer)
+POST	/cart/:userId/:productId							controllers.CartController.addItemToCart(userId: Integer, productId: Integer)
+DELETE  /cart/:userId/:productId							controllers.CartController.removeItemFromCart(userId: Integer, productId: Integer)
 
-#:::::::::::::::PRODUCTINFO:::::::::::::::::::::
-GET     /product/:productId 								controllers.Application.getProductInfo(productId: Integer)
+GET     /productInfo/:productId 							controllers.ProductController.getProductInfo(productId: Integer)
 
-#:::::::::::::::SELLPRODUCT:::::::::::::::::::::
-POST	/sell/:productId									controllers.Application.getSellProduct(productId: Integer)
+GET		/sellings/:userId									controllers.ProductController.getAllSellingProducts(userId: Integer)
+POST	/sellings/:userId									controllers.ProductController.sellAProduct(userId: Integer)
+PUT		/sellings/:userId/:productId						controllers.ProductController.updateASellingProduct(userId: Integer, productId: Integer)
+DELETE  /sellings/:userId/:productId						controllers.ProductController.quitFromSelling(userId: Integer, productId: Integer)
 
-#GET	/orders/:orderId								controllers.Application.getOrderInfo(OrderId: String)
+#GET	/orders/:orderId									controllers.Application.getOrderInfo(OrderId: String)
 
+GET		/buynow/:productId									controllers.ProductController.buyNow(productId: Integer)
 
+POST 	/placeBid											controllers.ProductController.placeBid()
 
+GET		/myhistory/:userId									controllers.Application.getUserActivityHistory(userId: Integer)						
 
 
 
