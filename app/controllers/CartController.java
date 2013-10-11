@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 
 import models.Product;
+import models.ProductForSale;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
@@ -17,14 +18,14 @@ public class CartController extends Controller {
 
 
 	public static Result getCartItems(int userId){	
-		ArrayList<Product> itemsInCart = Test.getCartItemsList();
+		ArrayList<ProductForSale> itemsInCart = Test.getCartItemsList();
 		
 		if(userId==0){
 			ObjectNode respJson = Json.newObject();
 			ArrayNode array = respJson.arrayNode();
 			ObjectNode itemJson = null;
 			
-			for(Product p: itemsInCart){
+			for(ProductForSale p: itemsInCart){
 				itemJson = Json.newObject();
 				itemJson.putPOJO("item", Json.toJson(p));
 				array.add(itemJson);

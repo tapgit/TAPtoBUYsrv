@@ -33,21 +33,21 @@ public class Application extends Controller {
 			return notFound("User not found");//404
 		}
 		else{
-//			ObjectNode respJson = Json.newObject();
-//			ArrayNode array = respJson.arrayNode();
-//			ObjectNode itemJson = null;
-//			ArrayList<Product> myHistoryItems = Test.getHistoryItemsList();
-//			for(Product p:myHistoryItems){
-//				itemJson = Json.newObject();
-//				
-//				if(p instanceof ProductForSale){
-//					itemJson.put("forBid", false);
-//				}
-//				else{
-//					itemJson.put("forBid", true);
-//				}
-//				array.add(itemJson);
-//			}
+			ObjectNode respJson = Json.newObject();
+			ArrayNode array = respJson.arrayNode();
+			ObjectNode itemJson = null;
+			ArrayList<Product> myHistoryItems = Test.getHistoryItemsList();
+			for(Product p:myHistoryItems){
+				itemJson = Json.newObject();
+				
+				if(p instanceof ProductForSale){
+					itemJson.put("forBid", false);
+				}
+				else{
+					itemJson.put("forBid", true);
+				}
+				array.add(itemJson);
+			}
 			return TODO;
 		}
 	}

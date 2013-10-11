@@ -15,8 +15,8 @@ import models.User;
 
 public class Test {
 
-	//public static String imagesDir = "/home/cok0/git/TAPtoBUYsrv/images/";
-	public static String imagesDir = "C:\\Users\\Kidany\\Documents\\GitHub\\git\\TAPtoBUYsrv\\images\\";
+	public static String imagesDir = "/home/cok0/git/TAPtoBUYsrv/images/";
+	//public static String imagesDir = "C:\\Users\\Kidany\\Documents\\GitHub\\git\\TAPtoBUYsrv\\images\\";
 	public static ArrayList<Product> getProductList(){
 		String scaledImgDir = "http://10.0.2.2:9000/images/scaled/";
 
@@ -53,12 +53,12 @@ public class Test {
 		productInfos.add(productInfo6);
 		return productInfos;
 	}
-	public static ArrayList<Product> getCartItemsList(){
+	public static ArrayList<ProductForSale> getCartItemsList(){
 		ArrayList<Product> items = getProductList();
-		ArrayList<Product> cartItems = new ArrayList<Product>();
-		cartItems.add(items.get(0));
-		cartItems.add(items.get(2));
-		cartItems.add(items.get(5));
+		ArrayList<ProductForSale> cartItems = new ArrayList<ProductForSale>();
+		cartItems.add((ProductForSale)items.get(0));
+		cartItems.add((ProductForSale)items.get(3));
+		cartItems.add((ProductForSale)items.get(5));
 		return cartItems;
 	}
 	public static ArrayList<Product> getSellingItemsList(){

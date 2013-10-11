@@ -2,9 +2,11 @@ package models;
 
 public class Bid {
 	//private int id;
-	private int user_id;
+	private int user_id;//bidder id
 	private int product_id;
 	private double amount;
+
+	private String username;//bidder username
 	
 	public Bid(int user_id, int product_id, double amount) {
 		super();
