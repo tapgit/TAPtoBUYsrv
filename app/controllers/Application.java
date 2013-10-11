@@ -20,7 +20,9 @@ import views.html.*;
 
 public class Application extends Controller {
 
-	public static String imagesDir = "/home/cok0/git/TAPtoBUYsrv/images/";
+	public static String scaledImagesDir = "C:\\Users\\Kidany\\Documents\\GitHub\\git\\TAPtoBUYsrv\\images\\scaled\\";
+	public static String imagesDir = "C:\\Users\\Kidany\\Documents\\GitHub\\git\\TAPtoBUYsrv\\images\\";
+	
 	public static Result index() {
 		return ok(index.render("Your new application is ready."));
 	}
@@ -335,7 +337,7 @@ public class Application extends Controller {
 	public static Result getScaledImage(String imageName){
 		if(imageName.equals("img1.jpg")||imageName.equals("img2.jpg")||imageName.equals("img3.jpg")||imageName.equals("img4.jpg")||
 				imageName.equals("img5.jpg")||imageName.equals("img6.jpg")){
-			return ok(new File(imagesDir + "scaled/" + imageName));//200
+			return ok(new File(scaledImagesDir + imageName));//200
 		}
 		else{
 			return notFound("No image found with the requested name");//404
