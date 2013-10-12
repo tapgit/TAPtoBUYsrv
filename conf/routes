@@ -44,7 +44,7 @@ GET		/buynow/:productId									controllers.ProductController.buyNow(productId: 
 
 POST 	/placeBid											controllers.ProductController.placeBid()
 
-GET		/mybiddings/:userId											controllers.Application.getMyBidding()
+#GET		/mybiddings/:userId									controllers.Application.getMyBidding(userId: Integer)
 
 GET		/myhistory/:userId									controllers.Application.getUserActivityHistory(userId: Integer)						
 
