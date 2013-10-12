@@ -71,9 +71,10 @@ public class Test {
 	public static ArrayList<Product> getHistoryItemsList(){
 		ArrayList<Product> items = getProductList();
 		ArrayList<Product> myHistoryItems = new ArrayList<Product>();
+		myHistoryItems.add(items.get(0));
+		myHistoryItems.add(items.get(1));
 		myHistoryItems.add(items.get(2));
-		myHistoryItems.add(items.get(5));
-		myHistoryItems.add(items.get(6));
+		myHistoryItems.add(items.get(3));
 		return myHistoryItems;
 	}
 	
