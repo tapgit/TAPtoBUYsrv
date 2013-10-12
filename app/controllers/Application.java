@@ -55,7 +55,7 @@ public class Application extends Controller {
 				array.add(itemJson);
 			}
 			respJson.put("myHistory", array);
-			return ok(respJson);
+			return ok(respJson);//200
 		}
 	}
 
