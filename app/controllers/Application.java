@@ -34,21 +34,28 @@ public class Application extends Controller {
 		}
 		else{
 			ObjectNode respJson = Json.newObject();
-			ArrayNode array = respJson.arrayNode();
+			ArrayNode array = respJson.arrayNode();//array de {forBid?,sold?,productObject}
 			ObjectNode itemJson = null;
 			ArrayList<Product> myHistoryItems = Test.getHistoryItemsList();
 			for(Product p:myHistoryItems){
 				itemJson = Json.newObject();
-				
 				if(p instanceof ProductForSale){
 					itemJson.put("forBid", false);
 				}
 				else{
 					itemJson.put("forBid", true);
 				}
+				if(p.getId() == 0 || p.getId() == 2){//sold items
+					itemJson.put("sold", true);
+				}
+				else{
+					itemJson.put("sold", false);
+				}
+				itemJson.putPOJO("item", Json.toJson(p));
 				array.add(itemJson);
 			}
-			return TODO;
+			respJson.put("myHistory", array);
+			return ok(respJson);
 		}
 	}
 
