@@ -32,7 +32,7 @@ POST	/cart/:userId/:productId							controllers.CartController.addItemToCart(use
 DELETE  /cart/:userId/:productId							controllers.CartController.removeItemFromCart(userId: Integer, productId: Integer)
 
 GET     /productInfo/:productId 							controllers.ProductController.getProductInfo(productId: Integer)
-
+#Sellings include bidding items
 GET		/sellings/:userId									controllers.ProductController.getAllSellingProducts(userId: Integer)
 POST	/sellings/:userId									controllers.ProductController.sellAProduct(userId: Integer)
 PUT		/sellings/:userId/:productId						controllers.ProductController.updateASellingProduct(userId: Integer, productId: Integer)
@@ -43,6 +43,8 @@ DELETE  /sellings/:userId/:productId						controllers.ProductController.quitFrom
 GET		/buynow/:productId									controllers.ProductController.buyNow(productId: Integer)
 
 POST 	/placeBid											controllers.ProductController.placeBid()
+
+GET		/mybiddings/:userId											controllers.Application.getMyBidding()
 
 GET		/myhistory/:userId									controllers.Application.getUserActivityHistory(userId: Integer)						
 
