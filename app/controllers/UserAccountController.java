@@ -23,8 +23,16 @@ public class UserAccountController extends Controller {
 		else {
 			String username = json.findPath("username").getTextValue();//json.get("username").getTextValue();
 			String password = json.findPath("password").getTextValue();
+			ObjectNode respJson = Json.newObject();
 			if(username.equals("lolo") && password.equals("bond")){
-				return ok(Test.getUser().getId() + "");//200 (send client the userId of the user that's being signed in)
+				respJson.put("admin", false);
+				respJson.put("id", 0);
+				return ok(respJson);//200 (send client the userId of the user that's being signed in)
+			}
+			else if(username.equals("admin") && password.equals("admin")){
+				respJson.put("admin", true);
+				respJson.put("id", 1);
+				return ok(respJson);
 			}
 			else{
 				return unauthorized("Bad username or password");//401
